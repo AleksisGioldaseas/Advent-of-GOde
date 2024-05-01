@@ -39,7 +39,7 @@ func main() {
 			pointer += len(intSlice)
 		} else if pointer >= len(intSlice) {
 			pointer -= len(intSlice)
-			fmt.Println("Part 1:", p1answer)
+			fmt.Println("Part 2:", p1answer)
 			return
 		}
 

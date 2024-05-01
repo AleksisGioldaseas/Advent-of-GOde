@@ -35,7 +35,7 @@ func main() {
 
 	}
 
-	fmt.Println("Part 1:", p1answer)
+	fmt.Println("Part 2:", p1answer)
 
 }
 
