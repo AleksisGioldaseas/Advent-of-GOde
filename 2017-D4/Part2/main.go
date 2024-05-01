@@ -11,7 +11,7 @@ var myMap map[string]int
 
 func main() {
 
-	p1answer := 0
+	p2answer := 0
 
 	for _, phrase := range strings.Split(input, "\n") {
 		if phrase == "" { //the newline at the end of the input appers as an empty phrase
@@ -30,12 +30,12 @@ func main() {
 			}
 		}
 		if allgood {
-			p1answer++
+			p2answer++
 		}
 
 	}
 
-	fmt.Println("Part 2:", p1answer)
+	fmt.Println("Part 2:", p2answer)
 
 }
 

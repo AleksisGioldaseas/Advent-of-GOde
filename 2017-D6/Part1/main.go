@@ -6,11 +6,7 @@ import (
 	"strings"
 )
 
-var input string = `5	1	10	0	1	7	13	14	3	12	8	10	7	12	0	6
-`
-
-var demo string = `0	2	7	0
-`
+var input string = `YOUR_INPUT_HERE`
 
 func main() {
 

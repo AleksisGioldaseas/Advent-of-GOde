@@ -23,12 +23,12 @@ func main() {
 		}
 	}
 
-	p1answer := 0
+	p2answer := 0
 	pointer := 0
 
 	for {
 
-		p1answer++
+		p2answer++
 		if intSlice[pointer] >= 3 { //Part 2 change        ->                        V
 			pointer, intSlice[pointer] = pointer+intSlice[pointer], intSlice[pointer]-1
 		} else { //                                                                  V
@@ -39,7 +39,7 @@ func main() {
 			pointer += len(intSlice)
 		} else if pointer >= len(intSlice) {
 			pointer -= len(intSlice)
-			fmt.Println("Part 2:", p1answer)
+			fmt.Println("Part 2:", p2answer)
 			return
 		}
 

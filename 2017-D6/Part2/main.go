@@ -6,11 +6,7 @@ import (
 	"strings"
 )
 
-var input string = `5	1	10	0	1	7	13	14	3	12	8	10	7	12	0	6
-`
-
-var demo string = `0	2	7	0
-`
+var input string = `YOUR_INPUT_HERE`
 
 func main() {
 
@@ -30,12 +26,12 @@ func main() {
 		}
 	}
 
-	p1answer := 0
+	p2answer := 0
 	pointer := 0
 	coolMap := make(map[string]int)
 
 	for {
-		p1answer++
+		p2answer++
 
 		winnerIndex := 0
 		winnerVal := -1
@@ -65,13 +61,13 @@ func main() {
 
 		val, ok := coolMap[word] //attempt to read assuming the key already exists
 		if ok == true {          //<- this means the word has been found before, therefore we've run into a repeated pattern, so we're done
-			fmt.Println("Part 2:", p1answer-val)
+			fmt.Println("Part 2:", p2answer-val)
 			return
 		}
 
 		//this incrementation also happens to add a key+val entry if there isn't one already and then increments it,
 		//pretty odd if you ask me...
-		coolMap[word] = p1answer //assign p1answer that is basically counts the cycles, so that next time
+		coolMap[word] = p2answer //assign p2answer that is basically counts the cycles, so that next time
 		//we see a repeated state we can use this to count how many steps it took
 
 	}
