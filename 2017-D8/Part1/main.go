@@ -8,10 +8,10 @@ import (
 
 var input string = `YOUR_INPUT_HERE`
 
-// var demo string = `b inc 5 if a > 1
-// a inc 1 if b < 5
-// c dec -10 if a >= 1
-// c inc -20 if c == 10`
+var demo string = `b inc 5 if a > 1
+a inc 1 if b < 5
+c dec -10 if a >= 1
+c inc -20 if c == 10`
 
 var memory map[string]int
 
@@ -24,7 +24,7 @@ func main() {
 		}
 
 		ret := strings.Split(line, " ")
-		//^
+
 		//["c", "inc", "-20", "if", "c", "==", "10"]
 		//	0     1      2      3    4    5     6
 
