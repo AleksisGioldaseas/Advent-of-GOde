@@ -6,9 +6,7 @@ import (
 	"strings"
 )
 
-var input string
-
-var demo string = `YOUR_INPUT_HERE`
+var input string = `YOUR_INPUT_HERE`
 
 type node struct {
 	Name     string
@@ -20,7 +18,6 @@ type node struct {
 var lookupMap map[string]*node //will be used to quickly get the reference of a node by just using its name
 
 func main() {
-	input = demo
 
 	lookupMap = make(map[string]*node)
 
@@ -92,8 +89,10 @@ func main() {
 
 		for _, childName := range childrenNames { //iterate over the children if there are any
 			childNode, ok := lookupMap[childName]
-			if ok { //if child found in map, just update the parent (cause it created itself)
+
+			if ok { //if child found in map, just update the parent pointer (cause it created itself and didn't have that info)
 				childNode.Parent = mainNode
+
 			} else { //if child not found, then create it, update it best we can, then add it to map
 				NewChildNode := &node{}
 				NewChildNode.Name = childName
@@ -107,8 +106,8 @@ func main() {
 
 	}
 
-	for _, node := range lookupMap { //just trying to access any node on the tree, doesn't matter which one as all of them should lead to the original parent
-		for node.Parent != nil {
+	for _, node := range lookupMap { //just trying to access any node on the tree, doesn't matter which one; as all of them should lead to the original parent
+		for node.Parent != nil { //if node has parent, it's not the root
 			node = node.Parent
 		}
 		fmt.Println(node.Name)

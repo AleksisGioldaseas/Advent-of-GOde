@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var demo string = `YOUR_INPUT_HERE`
+var input string = `YOUR_INPUT_HERE`
 
 type node struct {
 	Name     string
@@ -19,7 +19,6 @@ type node struct {
 var lookupMap map[string]*node //will be used to quickly get the reference of a node by just using its name
 
 func main() {
-	// input = demo
 
 	lookupMap = make(map[string]*node)
 
