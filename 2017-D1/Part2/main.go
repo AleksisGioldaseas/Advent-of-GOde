@@ -14,7 +14,7 @@ func main() {
 	P2Answer := 0
 	halfLen := len(number) / 2
 	size := len(number)
-	for i := 0; i < len(number); i++ { //interate over each position on the string
+	for i := 0; i < len(number); i++ { //iterate over each position on the string
 		a := number[i]
 		b := number[(i+halfLen)%size]
 		if a == b { //if char is the same as the next char

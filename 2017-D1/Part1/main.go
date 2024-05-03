@@ -11,7 +11,7 @@ func main() {
 	// number := demo[0]
 	number := input
 	P1Answer := 0
-	for i := 0; i < len(number)-1; i++ { //interate over each position on the string
+	for i := 0; i < len(number)-1; i++ { //iterate over each position on the string
 		if number[i] == number[i+1] { //if char is the same as the next char
 			P1Answer += int(number[i] - '0') //turning char to int
 		}
