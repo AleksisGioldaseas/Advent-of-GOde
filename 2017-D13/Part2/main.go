@@ -6,56 +6,11 @@ import (
 	"strings"
 )
 
-//TODO, problem is IMPOSSIBLE to brute force:
-// things to try:
-//		find the longest state cycle and modulo it so that skip() isn't called too often
-// 		skip delay's that are multiples of known state that cannot work,
-//		probably the best one: use the above idea is immediately find the smallest number without doing no manual calculation
+//Slow solution, takes several seconds to get my answer on my strong desktop cpu
+//definitely can be optimized to run instantly, by using the cycles and offsets of the scanners to calculate the answer in a mathematical way.
+//or my brute force method can be improved by an addition where multiples of known failed delays values, are skipped and not calculated or simulated
 
-var input string = `0: 3
-1: 2
-2: 4
-4: 6
-6: 4
-8: 6
-10: 5
-12: 8
-14: 8
-16: 6
-18: 8
-20: 6
-22: 10
-24: 8
-26: 12
-28: 12
-30: 8
-32: 12
-34: 8
-36: 14
-38: 12
-40: 18
-42: 12
-44: 12
-46: 9
-48: 14
-50: 18
-52: 10
-54: 14
-56: 12
-58: 12
-60: 14
-64: 14
-68: 12
-70: 17
-72: 14
-74: 12
-76: 14
-78: 14
-82: 14
-84: 14
-94: 14
-96: 14
-`
+var input string = `YOUR_INPUT_HERE`
 
 var layerMap map[int]*layerT
 
@@ -93,35 +48,39 @@ func main() {
 		layerMap[layer] = l
 
 	}
-	p1answer := 0
+
 	delay := 0
-	for {
-		for key := range layerMap { //resetting the layer values
-			layerMap[key].Dir = 1
-			layerMap[key].ScannerPos = 0
-		}
 
-		for i := 0; i < delay; i++ {
-			step()
-		}
-		caught := false
-		for i := 0; i <= firewallLen; i++ {
-			layer, ok := layerMap[i]
-
-			if ok {
-				if layer.ScannerPos == 0 {
-					p1answer += i * layer.Length
-					delay++
-					caught = true
-					break
+	for i := 0; i <= firewallLen; i++ {
+		_, ok := layerMap[i]
+		if ok {
+			for x := 0; x < i; x++ {
+				if layerMap[i].ScannerPos+layerMap[i].Dir >= layerMap[i].Length || layerMap[i].ScannerPos+layerMap[i].Dir < 0 {
+					layerMap[i].Dir *= -1
 				}
+				layerMap[i].ScannerPos += layerMap[i].Dir
 			}
-			step()
 		}
+	}
+
+	for {
+		caught := false
+
+		for _, node := range layerMap {
+			if node.ScannerPos == 0 {
+				caught = true
+				break
+			}
+		}
+
 		if caught == false {
 			fmt.Println("Part 2:", delay)
 			return
 		}
+
+		step()
+
+		delay += 1
 
 	}
 
@@ -135,5 +94,6 @@ func step() {
 			layerMap[key].Dir *= -1
 		}
 		layerMap[key].ScannerPos += layerMap[key].Dir
+
 	}
 }

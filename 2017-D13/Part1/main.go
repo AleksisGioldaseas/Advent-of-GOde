@@ -19,6 +19,7 @@ type layerT struct {
 func main() {
 	firewallLen := 0
 	layerMap = make(map[int]*layerT)
+	//generating a map that contains all the layers in a map, for ease of access
 	for _, line := range strings.Split(input, "\n") {
 		if line == "" {
 			continue
@@ -44,12 +45,13 @@ func main() {
 		layerMap[layer] = l
 
 	}
+
 	p1answer := 0
 	for i := 0; i <= firewallLen; i++ {
 		layer, ok := layerMap[i]
 
 		if ok {
-			if layer.ScannerPos == 0 {
+			if layer.ScannerPos == 0 { //if scanner is on position 0, that means the packet has been caught
 				p1answer += i * layer.Length
 
 			}
@@ -60,10 +62,10 @@ func main() {
 
 }
 
-func step() {
+func step() { //steps forward in time each scanner on the entire firewall
 
 	for key := range layerMap {
-
+		//if the next step would make scanner fall out of the bounds, then switch direction
 		if layerMap[key].ScannerPos+layerMap[key].Dir >= layerMap[key].Length || layerMap[key].ScannerPos+layerMap[key].Dir < 0 {
 			layerMap[key].Dir *= -1
 		}
