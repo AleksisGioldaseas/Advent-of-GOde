@@ -11,7 +11,7 @@ func main() {
 			continue
 		}
 
-		for _, thing := range strings.Split(input, ",") {
+		for _, thing := range strings.Split(line, ",") {
 			if thing == "" {
 				continue
 			}
