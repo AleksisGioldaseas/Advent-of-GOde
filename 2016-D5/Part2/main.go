@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-var input string = `YOUR_INPUT_HERE`
+var input string = `wtnhxymk`
 
 func main() {
 
