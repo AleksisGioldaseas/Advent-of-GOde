@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var input string = `YOUR_INPUT_HERE`
+var input string = `YOUR_INPUT_HERE!`
 
 func main() {
 	counter := 0
