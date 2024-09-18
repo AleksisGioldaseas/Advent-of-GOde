@@ -8,11 +8,14 @@ import (
 	"time"
 )
 
-var input string = `YOUR_INPUT_HERE`
+var input string = `ihaygndm`
 
 var cacheThrees = []byte{} //holds which letter is the first triplet, if any
 var cacheFives = []byte{}  //holds which letter is the first pentuplet, if any
 var hashSlice = []string{} //holds all the hashes after they've been generated
+
+const totalMultiCache = 500
+const workers = 50
 
 func main() {
 
@@ -111,8 +114,29 @@ func getHash(num int) string {
 		return hashSlice[num]
 
 	} else {
-		number := strconv.Itoa(num)
-		res := fmt.Sprintf("%x", md5.Sum([]byte(input+number)))
+		//caching this one and the next 1k hashes with goroutines
+
+		sliceParts := make([]chan []string, workers)
+
+		for i := 0; i < workers; i++ {
+			//send 10 goroutines to do 100 each,
+			sliceParts[i] = make(chan []string)                                                                        // initialize the channel
+			go cacheNHashes(num+(i*(totalMultiCache/workers)), num+((i+1)*(totalMultiCache/workers)-1), sliceParts[i]) //send the goroutine to work
+		}
+
+		for i := 0; i < workers; i++ {
+			//in the same order as before, take the []string from each slice and add it to hashslice
+			hashSlice = append(hashSlice, <-sliceParts[i]...)
+		}
+
+		return hashSlice[num]
+	}
+}
+
+func cacheNHashes(fromNum int, toNum int, channel chan<- []string) {
+	buffer := []string{}
+	for num := fromNum; num <= toNum; num++ {
+		res := fmt.Sprintf("%x", md5.Sum([]byte(input+strconv.Itoa(num))))
 		hash_b := [16]byte{}
 		hash_b_slice := hash_b[:]
 
@@ -121,7 +145,7 @@ func getHash(num int) string {
 			res = hex.EncodeToString(hash_b_slice)
 		}
 
-		hashSlice = append(hashSlice, res)
-		return hashSlice[len(hashSlice)-1]
+		buffer = append(buffer, res)
 	}
+	channel <- buffer
 }
