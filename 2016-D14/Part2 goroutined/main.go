@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var input string = `ihaygndm`
+var input string = `YOUR_INPUT_HERE`
 
 var cacheThrees = []byte{} //holds which letter is the first triplet, if any
 var cacheFives = []byte{}  //holds which letter is the first pentuplet, if any
