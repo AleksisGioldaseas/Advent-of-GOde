@@ -8,10 +8,21 @@ import (
 
 func main() {
 	input := getInput()
-	inputLines := strings.Split(input, "\n")
 
+	fmt.Println("Part 1 answer:", part1(input))
+	fmt.Println("Part 2 answer:", part2(input))
+}
+
+func part1(input string) string {
+	inputLines := strings.Split(input, "\n")
 	part1Answer := ""
-	fmt.Println("Part 1 answer:", part1Answer)
+
+}
+
+func part2(input string) string {
+	inputLines := strings.Split(input, "\n")
+	part2Answer := ""
+
 }
 
 func getInput() string {
