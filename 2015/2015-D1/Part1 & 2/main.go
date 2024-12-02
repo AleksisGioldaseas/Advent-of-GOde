@@ -8,7 +8,6 @@ import (
 
 func main() {
 	input := getInput()
-
 	fmt.Println("Part 1 answer:", part1(input))
 	fmt.Println("Part 2 answer:", part2(input))
 }

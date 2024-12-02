@@ -22,20 +22,19 @@ func part1(input string) string {
 func part2(input string) string {
 	inputLines := strings.Split(input, "\n")
 	part2Answer := ""
-
 }
 
 func getInput() string {
-	data, err := os.ReadFile("input.txt")
+	fileName := "demo.txt"
+	data, err := os.ReadFile(fileName)
 	if err != nil {
 		fmt.Println("Error opening file")
 		os.Exit(1)
 	}
 	if len(data) == 0 {
-		fmt.Println("Input.txt file is empty")
+		fmt.Println(fileName, " file is empty")
 		os.Exit(1)
 	}
 	input := strings.ReplaceAll(string(data), "\r\n", "\n") //doing this replace so it can handle both linux and window text format
-
-	return input
+	return strings.TrimSpace(input)
 }
