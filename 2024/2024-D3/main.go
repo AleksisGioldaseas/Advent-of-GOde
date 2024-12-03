@@ -9,13 +9,11 @@ import (
 
 func main() {
 	input := getInput()
-
 	fmt.Println("Part 1 answer:", part1(input))
 	fmt.Println("Part 2 answer:", part2(input))
 }
 
 func part1(input string) string {
-	count := 0
 	inputLines := strings.Split(input, "\n")
 	total := 0
 	for _, line := range inputLines {
@@ -31,14 +29,11 @@ func part1(input string) string {
 				val2, err2 := strconv.Atoi(sides[1])
 				if err1 == nil && err2 == nil {
 					total += val1 * val2
-					fmt.Println(val1, val2)
 				}
 			}
 		}
 	}
-
-	return fmt.Sprint(total, count)
-
+	return fmt.Sprint(total)
 }
 
 func part2(input string) string {
@@ -54,20 +49,15 @@ func part2(input string) string {
 			for _, t := range temp {
 				newParts = append(newParts, t+")")
 			}
-
 		}
 		for _, p := range newParts {
-
 			startI := strings.LastIndex(p, "do()")
 			stopI := strings.LastIndex(p, "don't()")
-			// fmt.Println(do, startI, stopI, p)
 			if startI > stopI {
 				do = true
 			} else if stopI > startI {
 				do = false
 			}
-			// fmt.Println(do, "p: >>>>> ", p)
-
 			sides := strings.Split(p, ",")
 			if len(sides) == 2 {
 				a := sides[0]
@@ -75,7 +65,6 @@ func part2(input string) string {
 				if b[len(b)-1] != ')' {
 					continue
 				}
-
 				val1, err1 := strconv.Atoi(a)
 				val2, err2 := strconv.Atoi(b[:len(b)-1])
 				if do && err1 == nil && err2 == nil {
