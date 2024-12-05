@@ -9,13 +9,12 @@ import (
 )
 
 type page struct {
-	left []int
-	right  []int
+	left  []int
+	right []int
 }
 
 func main() {
 	input := getInput()
-
 	fmt.Println("Part 1 answer:", part1(input))
 	fmt.Println("Part 2 answer:", part2(input))
 }
@@ -29,7 +28,7 @@ func part1(input string) string {
 	orderRules := strings.Split(parts[0], "\n")
 
 	initMap(orderRules)
-	
+
 	total := 0
 	for _, pages := range books {
 		slice, ok := pagesAreSorted(pages)
@@ -37,9 +36,6 @@ func part1(input string) string {
 			total += slice[len(slice)/2]
 		}
 	}
-
-	// inputLines := strings.Split(input, "\n")
-
 	return fmt.Sprint(total)
 }
 
@@ -47,7 +43,6 @@ func part2(input string) string {
 	parts := strings.Split(input, "\n\n")
 
 	books := strings.Split(parts[1], "\n")
-	
 
 	total := 0
 	for _, pages := range books {
@@ -55,26 +50,14 @@ func part2(input string) string {
 		if !ok {
 			slice = sortSlice(slice)
 			total += slice[len(slice)/2]
-			// fmt.Println(slice, ok, slice[len(slice)/2])
 		}
-		
 	}
-
-	// inputLines := strings.Split(input, "\n")
-
 	return fmt.Sprint(total)
 }
 
-func printMap(){
-	for k, v := range rulesMap{
-		fmt.Println(k,v)
-	}
-	fmt.Println()
-}
-
+// set up map that tells the order of numbers
 func initMap(orderRules []string) {
 	for _, rule := range orderRules {
-		// fmt.Println(rule)
 		parts := strings.Split(rule, "|")
 
 		A := atoi(parts[0])
@@ -95,10 +78,10 @@ func initMap(orderRules []string) {
 		} else {
 			rulesMap[B] = page{left: []int{A}}
 		}
-		// printMap()
 	}
 }
 
+// ascii to int
 func atoi(str string) int {
 	val, err := strconv.Atoi(str)
 	if err != nil {
@@ -113,6 +96,7 @@ func pagesAreSorted(pages string) ([]int, bool) {
 	for _, pageStr := range strings.Split(pages, ",") {
 		pageNums = append(pageNums, atoi(pageStr))
 	}
+	//nested loop to check if a number is found that is on the right of another number when it shouldn't be
 	for start, num := range pageNums {
 		if start == len(pageNums)-1 {
 			continue
@@ -128,55 +112,36 @@ func pagesAreSorted(pages string) ([]int, bool) {
 }
 
 func sortSlice(slice []int) []int {
-	// fmt.Println("Sort this", slice)
 	newSlice := []int{slice[0]}
 	slice = slice[1:]
+	//well try to insert each number into a new slice in the correct order
 	for _, addMe := range slice {
-		// fmt.Println("so far: ",newSlice)
 		stillNeedToAdd := true
-		// fmt.Println("first\n")
+		//from the left, insert next to the first number that has to be to your right
 		for i := 0; i < len(newSlice); i++ {
-			
-			// fmt.Println(i, "addme:",addMe, newSlice)
-			// fmt.Println("sides",rulesMap[addMe])
-
-			if slices.Contains(rulesMap[addMe].right, newSlice[i]){
-				// fmt.Println("insert ",addMe)
+			if slices.Contains(rulesMap[addMe].right, newSlice[i]) {
 				newSlice = slices.Insert(newSlice, i, addMe)
 				stillNeedToAdd = false
 				break
-			}			
+			}
 		}
-		// fmt.Println("second\n")
-		if stillNeedToAdd{
-			for i := len(newSlice)-1; i >= 0; i-- {
-				
-				// fmt.Println(i, "addme:",addMe, newSlice)
-				// fmt.Println("sides",rulesMap[addMe])
 
-				if slices.Contains(rulesMap[addMe].left, newSlice[i]){
-					// fmt.Println("insert ",addMe)
+		//from the right, insert next to the first number that has to be on your left
+		if stillNeedToAdd {
+			for i := len(newSlice) - 1; i >= 0; i-- {
+				if slices.Contains(rulesMap[addMe].left, newSlice[i]) {
 					newSlice = slices.Insert(newSlice, i+1, addMe)
 					stillNeedToAdd = false
 					break
 				}
 			}
 		}
-		// if stillNeedToAdd{
-		// 	for i := len(newSlice)-1; i >= 0; i-- {
-		// 		if slices.Contains(rulesMap[newSlice[i]].left, addMe){
-		// 			newSlice = slices.Insert(newSlice, i+1, addMe)
-		// 			stillNeedToAdd = false
-		// 			break
-		// 		}
-		// 	}
-		// }
-		if stillNeedToAdd{
-			// fmt.Println("append")
+
+		//else just append it to the end, as apparently it doens't matter
+		if stillNeedToAdd {
 			newSlice = append(newSlice, addMe)
 		}
 	}
-	// fmt.Println("---------------------final: ",newSlice)
 	return newSlice
 }
 
