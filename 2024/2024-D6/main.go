@@ -66,7 +66,7 @@ func part1(input string) string {
 // We make the guard walk on her path, but on each stepForward we temporarily put a wall in her face,
 // and then we create a clone guard that will walk from the guard's original spot and we see if the new wall
 // will make the clone loop around
-// if it does, leave an X on the ground, and then count all the X's
+// if it does loop, leave an X on the ground where the real guard is standing at, and then count all the X's
 func part2(input string) string {
 	grid, theGuardOG := inputToGrid(input)
 	theGuard := theGuardOG
